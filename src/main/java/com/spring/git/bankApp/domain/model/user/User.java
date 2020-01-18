@@ -1,19 +1,17 @@
 package com.spring.git.bankApp.domain.model.user;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
+@Table(name = "users")
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
 public class User {
 
     @Id

@@ -21,4 +21,7 @@ public class Transfer {
 
     private String fromAccountNumber;
     private String toAccountNumber;
+
+    public void transferMoney() {
+    }
 }

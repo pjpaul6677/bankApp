@@ -1,5 +1,6 @@
 package com.spring.git.bankApp.domain.user;
 
+import com.spring.git.bankApp.domain.model.user.Gender;
 import com.spring.git.bankApp.domain.model.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,8 +9,10 @@ import lombok.Getter;
 @Getter
 public class UserCommand {
     private String login;
+    private Gender gender;
 
-    public User generateUser() {
-        return User.builder().login(login).build();
+    public User createUser() {
+        return User.createUser(login, gender);
     }
+
 }

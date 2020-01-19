@@ -9,7 +9,7 @@ public class UserFacade {
 
     private final UserCreator userCreator;
 
-    public void create(UserCommand userCommand) {
-        userCreator.create(userCommand.getLogin());
+    public void createUser(UserCommand userCommand) {
+        userCreator.createUser(userCommand.getLogin(), userCommand.getGender());
     }
 }

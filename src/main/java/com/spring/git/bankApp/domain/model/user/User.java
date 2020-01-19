@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @Table(name = "users")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -22,9 +22,19 @@ public class User extends Auditable {
 
     private String login;
 
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Set<Account> accounts = new HashSet<>();
+
+    public static User createUser(String login, Gender gender) {
+        return User.builder().login(login)
+                .gender(gender).build();
+    }
+
+
 
     public void addAccount(Account account) {
         accounts.add(account);

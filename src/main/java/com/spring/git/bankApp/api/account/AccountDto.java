@@ -1,5 +1,6 @@
 package com.spring.git.bankApp.api.account;
 
+import com.spring.git.bankApp.domain.model.user.Gender;
 import lombok.Builder;
 import lombok.Value;
 

@@ -4,12 +4,9 @@ import com.spring.git.bankApp.domain.user.UserCommand;
 import com.spring.git.bankApp.domain.user.UserFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("v1/users")
@@ -19,10 +16,13 @@ public class UserController {
 
     private final UserFacade userFacade;
 
-    @PostMapping("/{login}")
-    public void createUser(@NotNull @PathVariable String login) {
-        UserCommand userCommand = UserCommand.builder().login(login).build();
-        userFacade.create(userCommand);
-        log.info("User creation {}", login);
+    @PostMapping
+    public void createMaleUser(@Valid @RequestBody UserDto userDto) {
+        log.info("Male user creation {}", userDto);
+        UserCommand userCommand = UserCommand.builder().login(userDto.getLogin())
+                .gender(userDto.getGender()).build();
+        userFacade.createUser(userCommand);
     }
+
+
 }

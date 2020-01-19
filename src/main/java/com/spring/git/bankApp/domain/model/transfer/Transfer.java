@@ -8,8 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
-//@Entity
+@Entity
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -21,7 +22,6 @@ public class Transfer {
 
     private String fromAccountNumber;
     private String toAccountNumber;
+    private BigDecimal amount;
 
-    public void transferMoney() {
-    }
 }

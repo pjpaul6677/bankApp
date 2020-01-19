@@ -1,6 +1,5 @@
 package com.spring.git.bankApp.domain.account;
 
-import com.spring.git.bankApp.domain.model.account.AccountCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ public class AccountFacade {
 
     private final AccountCreator accountCreator;
 
-    public void create(AccountCommand accountCommand) {
-        accountCreator.create(accountCommand.getAccountNumber(), accountCommand.getBalance());
+    public void create(long userId) {
+        accountCreator.create(userId);
     }
 }

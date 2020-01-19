@@ -1,5 +1,6 @@
 package com.spring.git.bankApp.domain.model.transfer;
 
+import com.spring.git.bankApp.domain.model.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Transfer {
+public class Transfer extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

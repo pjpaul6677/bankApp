@@ -1,6 +1,7 @@
 package com.spring.git.bankApp.domain.model.user;
 
 
+import com.spring.git.bankApp.domain.model.Auditable;
 import com.spring.git.bankApp.domain.model.account.Account;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Table(name = "users")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class User {
+public class User extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

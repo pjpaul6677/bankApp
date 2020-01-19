@@ -9,7 +9,7 @@ public class AccountFacade {
 
     private final AccountCreator accountCreator;
 
-    public void create(long userId) {
-        accountCreator.create(userId);
+    public void createToUser(long userId) {
+        accountCreator.createToUser(userId);
     }
 }

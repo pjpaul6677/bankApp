@@ -18,9 +18,9 @@ public class AccountController {
 
     private final AccountFacade accountFacade;
 
-    @PostMapping("/user/{userId}")
+    @PostMapping("/users/{userId}")
     public void createAccount(@NotNull @PathVariable Long userId) {
-        accountFacade.create(userId);
+        accountFacade.createToUser(userId);
         log.info("Account creation for userId {}", userId);
     }
 

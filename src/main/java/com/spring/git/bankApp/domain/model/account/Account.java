@@ -2,10 +2,7 @@ package com.spring.git.bankApp.domain.model.account;
 
 import com.spring.git.bankApp.domain.model.Auditable;
 import com.spring.git.bankApp.domain.model.transfer.Transfer;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -17,9 +14,6 @@ import java.util.Set;
 @Table(name = "accounts")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NamedQueries(
-        @NamedQuery(name = "Account.findByAccountNumber", query = "SELECT a FROM Account a WHERE a.accountNumber = :accountNumber")
-)
 public class Account extends Auditable {
 
     @Id
@@ -27,6 +21,7 @@ public class Account extends Auditable {
     @SequenceGenerator(name = "user_sequence")
     private Long id;
 
+    @Getter
     private String accountNumber;
     private BigDecimal balance;
 

@@ -23,6 +23,7 @@ public class Account extends Auditable {
 
     @Getter
     private String accountNumber;
+    @Getter
     private BigDecimal balance;
 
     @OneToMany(cascade = CascadeType.ALL)

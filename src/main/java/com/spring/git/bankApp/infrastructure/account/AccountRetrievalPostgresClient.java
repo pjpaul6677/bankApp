@@ -5,8 +5,6 @@ import com.spring.git.bankApp.domain.model.account.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 class AccountRetrievalPostgresClient implements AccountRetrievalClient {
@@ -14,10 +12,7 @@ class AccountRetrievalPostgresClient implements AccountRetrievalClient {
     private final AccountRepository accountRepository;
 
     @Override
-    public Account findCardByAccountNumber(String accountNumber) {
-        List<Account> accounts = accountRepository.findAll();
-        return accounts.stream()
-                .filter(s -> s.getAccountNumber().equals(accountNumber))
-                .findFirst().get();
+    public Account findByAccountNumber(String accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber);
     }
 }

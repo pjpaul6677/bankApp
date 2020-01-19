@@ -1,25 +1,33 @@
 package com.spring.git.bankApp.domain.model.user;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import com.spring.git.bankApp.domain.model.Auditable;
+import com.spring.git.bankApp.domain.model.account.Account;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Builder
-@RequiredArgsConstructor
-@AllArgsConstructor
-public class User {
+@Table(name = "users")
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+public class User extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String login;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Set<Account> accounts = new HashSet<>();
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
 
 }

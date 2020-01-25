@@ -4,6 +4,7 @@ package com.spring.git.bankApp.domain.model.user;
 import com.spring.git.bankApp.domain.model.Auditable;
 import com.spring.git.bankApp.domain.model.account.Account;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,14 +15,19 @@ import java.util.Set;
 @Table(name = "users")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@Slf4j
 public class User extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Getter
     private String login;
 
+    private String password;
+
+    @Getter
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -29,15 +35,25 @@ public class User extends Auditable {
     @JoinColumn(name = "user_id")
     private Set<Account> accounts = new HashSet<>();
 
-    public static User createUser(String login, Gender gender) {
-        return User.builder().login(login)
-                .gender(gender).build();
+    public static User createUser(String login, Gender gender, String password) {
+        return User.builder()
+                .login(login)
+                .gender(gender)
+                .password(password).build();
     }
-
-
 
     public void addAccount(Account account) {
         accounts.add(account);
     }
+
+    public void updatePassword(String oldPassword, String newPassword) {
+        if (this.password.equals(oldPassword)) {
+           this.password = newPassword;
+            log.info("Password updated");
+        } else {
+             log.info("False password");
+        }
+    }
+
 
 }

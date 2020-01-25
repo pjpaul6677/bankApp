@@ -10,9 +10,10 @@ import lombok.Getter;
 public class UserCommand {
     private String login;
     private Gender gender;
+    private String password;
 
     public User createUser() {
-        return User.createUser(login, gender);
+        return User.createUser(login, gender, password);
     }
 
 }

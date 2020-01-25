@@ -4,6 +4,6 @@ import com.spring.git.bankApp.domain.model.user.Gender;
 
 public interface UserCreator {
 
-    void createUser(String login, Gender gender);
+    void create(String login, Gender gender, String password);
 
 }

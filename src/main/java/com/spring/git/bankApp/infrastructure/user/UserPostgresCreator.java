@@ -13,9 +13,11 @@ class UserPostgresCreator implements UserCreator {
     private final UserRepository userRepository;
 
     @Override
-    public void createUser(String login, Gender gender) {
-        UserCommand userCommand = UserCommand.builder().login(login)
-                .gender(gender).build();
+    public void create(String login, Gender gender, String password) {
+        UserCommand userCommand = UserCommand.builder()
+                .login(login)
+                .gender(gender)
+                .password(password).build();
         userRepository.save(userCommand.createUser());
     }
 

@@ -11,8 +11,12 @@ public class AccountFacade {
     private final AccountCreator accountCreator;
     private final AccountRetrievalClient accountRetrievalClient;
 
-    public void createToUser(long userId) {
-        accountCreator.createToUser(userId);
+    public void createPremiumToUser(long userId) {
+        accountCreator.createPremiumToUser(userId);
+    }
+
+    public void createStandardToUser(long userId) {
+        accountCreator.createStandardToUser(userId);
     }
 
     public Account findAccountByAccountNumber(String accountNumber) {

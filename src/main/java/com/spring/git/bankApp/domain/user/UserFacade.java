@@ -1,5 +1,7 @@
 package com.spring.git.bankApp.domain.user;
 
+import com.spring.git.bankApp.domain.model.user.Gender;
+import com.spring.git.bankApp.domain.model.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +10,18 @@ import org.springframework.stereotype.Service;
 public class UserFacade {
 
     private final UserCreator userCreator;
+    private final UserRetrievalClient userRetrievalClient;
+    private final UserUpdate userUpdate;
 
-    public void createUser(UserCommand userCommand) {
-        userCreator.createUser(userCommand.getLogin(), userCommand.getGender());
+    public void createUser(String login, Gender gender, String password) {
+        userCreator.create(login, gender, password);
+    }
+
+    public void updatePassword(String login, String oldPassword, String newPassword) {
+        userUpdate.updatePassword(login, oldPassword, newPassword);
+    }
+
+    public User findByLogin(String login) {
+        return userRetrievalClient.getByLogin(login);
     }
 }

@@ -25,8 +25,11 @@ public class Account extends Auditable {
     private String accountNumber;
     @Getter
     private BigDecimal balance;
+    @Getter
+    private AccountType accountType;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Set<Transfer> transfers = new HashSet<>();
+
 }

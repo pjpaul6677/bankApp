@@ -1,6 +1,7 @@
 package com.spring.git.bankApp.domain.account;
 
 import com.spring.git.bankApp.domain.model.account.Account;
+import com.spring.git.bankApp.domain.model.account.AccountType;
 import com.spring.git.bankApp.domain.model.user.User;
 import com.spring.git.bankApp.domain.user.UserRetrievalClient;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,20 @@ class AccountCreator {
     private final UserRetrievalClient userRetrievalClient;
 
     @Transactional
-    public void createToUser(long userId) {
+    public void createPremiumToUser(long userId) {
         User user = userRetrievalClient.getById(userId);
         user.addAccount(Account.builder()
                 .accountNumber(UUID.randomUUID().toString().substring(1,17))
-                .balance(BigDecimal.ZERO).build());
+                .balance(BigDecimal.valueOf(100l))
+                .accountType(AccountType.PREMIUM).build());
+    }
+
+    @Transactional
+    public void createStandardToUser(long userId) {
+        User user = userRetrievalClient.getById(userId);
+        user.addAccount(Account.builder()
+                .accountNumber(UUID.randomUUID().toString().substring(1,17))
+                .balance(BigDecimal.ZERO)
+                .accountType(AccountType.PREMIUM).build());
     }
 }

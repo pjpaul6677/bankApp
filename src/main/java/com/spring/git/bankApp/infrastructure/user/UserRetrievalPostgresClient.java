@@ -15,4 +15,9 @@ class UserRetrievalPostgresClient implements UserRetrievalClient {
     public User getById(long userId) {
         return userRepository.findById(userId).get();
     }
+
+    @Override
+    public User getByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
 }

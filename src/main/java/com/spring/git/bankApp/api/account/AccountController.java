@@ -7,9 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
-import java.util.Optional;
-
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -18,15 +15,31 @@ public class AccountController {
 
     private final AccountFacade accountFacade;
 
-    @PostMapping("/users/{userId}")
-    public void createAccount(@NotNull @PathVariable Long userId) {
-        accountFacade.createToUser(userId);
+    @PostMapping("/premium/users/{userId}")
+    public void createPremiumAccount(@PathVariable Long userId) {
         log.info("Account creation for userId {}", userId);
+        accountFacade.createPremiumToUser(userId);
+    }
+
+    @PostMapping("/standard/users/{userId}")
+    public void createStandardAccount(@PathVariable Long userId) {
+        log.info("Account creation for userId {}", userId);
+        accountFacade.createStandardToUser(userId);
     }
 
     @GetMapping(path = "/{accountNumber}")
-    public ResponseEntity<AccountDto> findCardByAccountNumber(@NotNull @PathVariable String accountNumber) {
-        return ResponseEntity.ok(AccountMapper.mapToDto(accountFacade.findAccountByAccountNumber(accountNumber)));
+    public ResponseEntity<AccountDto> findCardByAccountNumber(@PathVariable String accountNumber) {
+        AccountDto accountDto = AccountMapper.mapToDto(accountFacade.findAccountByAccountNumber(accountNumber));
+        return ResponseEntity.ok(accountDto);
+    }
+
+    private static class AccountMapper {
+        static AccountDto mapToDto(Account account) {
+            return AccountDto.builder()
+                    .accountNumber(account.getAccountNumber())
+                    .balance(account.getBalance())
+                    .build();
+        }
     }
 
 }

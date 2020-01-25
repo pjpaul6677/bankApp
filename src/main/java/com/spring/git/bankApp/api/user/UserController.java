@@ -22,6 +22,12 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.mapToDto(userFacade.findByLogin(login)));
     }
 
+    @PatchMapping(path = "/updateLogin")
+    public void udpateLogin(@RequestParam String oldLogin, @RequestParam String newLogin, @RequestParam String password) {
+        log.info("Updating login {}{}", oldLogin, newLogin);
+        userFacade.updateLogin(oldLogin, newLogin, password);
+    }
+
     @PatchMapping(path = "/updatePassword")
     public void updatePassword(@RequestParam String login, @RequestParam String oldPassword, @RequestParam String newPassword) {
         log.info("Updating password {}", login);

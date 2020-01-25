@@ -21,6 +21,11 @@ public class UserFacade {
         userUpdate.updatePassword(login, oldPassword, newPassword);
     }
 
+    public void updateLogin(String oldLogin, String newLogin, String password) {
+        userUpdate.updateLogin(oldLogin,newLogin, password);
+    }
+
+
     public User findByLogin(String login) {
         return userRetrievalClient.getByLogin(login);
     }

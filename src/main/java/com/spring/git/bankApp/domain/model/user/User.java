@@ -55,5 +55,14 @@ public class User extends Auditable {
         }
     }
 
+    public void updateLogin(String newLogin, String password) {
+        if (this.password.equals(password)) {
+            this.login = newLogin;
+            log.info("Login updated");
+        } else {
+            log.info("False password");
+        }
+    }
+
 
 }

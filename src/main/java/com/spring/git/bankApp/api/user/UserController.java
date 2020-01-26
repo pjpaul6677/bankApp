@@ -5,14 +5,18 @@ import com.spring.git.bankApp.domain.user.UserFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @RestController
 @RequestMapping("v1/users")
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class UserController {
 
     private final UserFacade userFacade;
@@ -23,15 +27,18 @@ public class UserController {
     }
 
     @PatchMapping(path = "/updateLogin")
-    public void udpateLogin(@RequestParam String oldLogin, @RequestParam String newLogin, @RequestParam String password) {
-        log.info("Updating login {}{}", oldLogin, newLogin);
+    public void udpateLogin(@RequestParam String password, @RequestParam String oldLogin,
+                            @NotBlank @Size(min = 3, max = 15) @RequestParam String newLogin) {
+        log.info("Updating login {}, newLogin {}", oldLogin, newLogin);
         userFacade.updateLogin(oldLogin, newLogin, password);
     }
 
     @PatchMapping(path = "/updatePassword")
-    public void updatePassword(@RequestParam String login, @RequestParam String oldPassword, @RequestParam String newPassword) {
+    public ResponseEntity<String> updatePassword(@RequestParam String login, @RequestParam String oldPassword,
+                               @NotBlank @Size(min = 6, max = 15) @RequestParam String newPassword) {
         log.info("Updating password {}", login);
         userFacade.updatePassword(login, oldPassword, newPassword);
+        return  ResponseEntity.ok("Jest ok");
     }
 
     @PostMapping
@@ -46,6 +53,5 @@ public class UserController {
                     .gender(user.getGender()).build();
         }
     }
-
 
 }

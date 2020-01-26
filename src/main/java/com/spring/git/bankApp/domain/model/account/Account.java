@@ -1,6 +1,7 @@
 package com.spring.git.bankApp.domain.model.account;
 
 import com.spring.git.bankApp.domain.model.Auditable;
+import com.spring.git.bankApp.domain.model.card.Card;
 import com.spring.git.bankApp.domain.model.transfer.Transfer;
 import lombok.*;
 
@@ -30,6 +31,14 @@ public class Account extends Auditable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
+    private Set<Card> cards = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     private Set<Transfer> transfers = new HashSet<>();
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
 
 }

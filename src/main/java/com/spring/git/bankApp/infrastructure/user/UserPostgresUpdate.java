@@ -18,4 +18,11 @@ class UserPostgresUpdate implements UserUpdate {
         user.updatePassword(oldPassword, newPassword);
         userRepository.save(user);
     }
+
+    @Override
+    public void updateLogin(String oldLogin, String newLogin, String password) {
+        User user = userRepository.findByLogin(oldLogin);
+        user.updateLogin(newLogin, password);
+        userRepository.save(user);
+    }
 }

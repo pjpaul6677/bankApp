@@ -53,6 +53,12 @@ public class UserController {
         userFacade.createUserAndPremiumAccount(userDto.getLogin(), userDto.getGender(), userDto.getPassword());
     }
 
+    @PostMapping(path = "/userstandard")
+    public void createUserAndStandardAccount(@Valid @RequestBody UserDto userDto) {
+        log.info("User and standard Account creation {}", userDto.getLogin());
+        userFacade.createUserAndStandardAccount(userDto.getLogin(), userDto.getGender(), userDto.getPassword());
+    }
+
     private static class UserMapper {
         private static UserDto mapToDto(User user) {
             return UserDto.builder().login(user.getLogin())

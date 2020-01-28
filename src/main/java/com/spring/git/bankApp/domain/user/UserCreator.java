@@ -8,4 +8,6 @@ public interface UserCreator {
 
     void createUserAndPremiumAccount(String login, Gender gender, String password);
 
+    void createUserAndStandardAccount(String login, Gender gender, String password);
+
 }

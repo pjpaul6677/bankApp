@@ -1,6 +1,7 @@
 package com.spring.git.bankApp.api.transfer;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

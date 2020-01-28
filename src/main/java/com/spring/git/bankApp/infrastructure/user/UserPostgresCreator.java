@@ -35,8 +35,20 @@ class UserPostgresCreator implements UserCreator {
         userRepository.save(user);
         Account account = Account.builder()
                 .accountNumber(UUID.randomUUID().toString().substring(1,17))
-                .balance(BigDecimal.valueOf(100l))
+                .balance(BigDecimal.valueOf(1000l))
                 .accountType(AccountType.PREMIUM).build();
+        user.addAccount(account);
+    }
+
+    @Override
+    @Transactional
+    public void createUserAndStandardAccount(String login, Gender gender, String password) {
+        User user = User.createUser(login, gender, password);
+        userRepository.save(user);
+        Account account = Account.builder()
+                .accountNumber(UUID.randomUUID().toString().substring(1,17))
+                .balance(BigDecimal.ZERO)
+                .accountType(AccountType.STANDARD).build();
         user.addAccount(account);
     }
 

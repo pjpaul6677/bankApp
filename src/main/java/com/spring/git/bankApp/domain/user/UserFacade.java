@@ -1,5 +1,6 @@
 package com.spring.git.bankApp.domain.user;
 
+import com.spring.git.bankApp.domain.account.AccountCreator;
 import com.spring.git.bankApp.domain.model.user.Gender;
 import com.spring.git.bankApp.domain.model.user.User;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +13,14 @@ public class UserFacade {
     private final UserCreator userCreator;
     private final UserRetrievalClient userRetrievalClient;
     private final UserUpdate userUpdate;
+    private final AccountCreator accountCreator;
 
     public void createUser(String login, Gender gender, String password) {
         userCreator.create(login, gender, password);
+    }
+
+    public void createUserAndPremiumAccount(String login, Gender gender, String password) {
+        userCreator.createUserAndPremiumAccount(login, gender, password);
     }
 
     public void updatePassword(String login, String oldPassword, String newPassword) {

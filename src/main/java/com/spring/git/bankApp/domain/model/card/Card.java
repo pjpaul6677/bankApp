@@ -1,5 +1,6 @@
 package com.spring.git.bankApp.domain.model.card;
 
+import com.spring.git.bankApp.domain.model.account.Account;
 import com.spring.git.bankApp.exceptionHandler.ExceptionHandler;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import javax.validation.constraints.Size;
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "card_sequence")
     private long id;
 
     @Getter
@@ -24,6 +25,11 @@ public class Card {
     @Getter
     @Enumerated(EnumType.STRING)
     private CardStatus cardStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    @Setter
+    private Account account;
 
     public static Card createCard(String lastFourDigits) {
         return Card.builder()

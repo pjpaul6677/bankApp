@@ -1,7 +1,7 @@
 package com.spring.git.bankApp.infrastructure.card;
 
-import com.spring.git.bankApp.domain.model.card.CardStatus;
 import com.spring.git.bankApp.domain.card.CardUpdate;
+import com.spring.git.bankApp.domain.model.card.CardStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

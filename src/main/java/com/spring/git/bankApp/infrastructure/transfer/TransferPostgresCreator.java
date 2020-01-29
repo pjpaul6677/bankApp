@@ -25,7 +25,7 @@ class TransferPostgresCreator implements TransferCreator {
         Transfer transfer = Transfer.create(fromAccountNumber,toAccountNumber,amount);
         accountRetrievalClient.findByAccountNumber(fromAccountNumber)
                 .sendMoney(amount);
-        accountRetrievalClient.findByAccountNumber(toAccountNumber)
+        accountRetrievalClient.findByAccNumberOrExtAccount(toAccountNumber)
                 .receiveMoney(amount);
         transferRepository.save(transfer);
 
@@ -44,7 +44,7 @@ class TransferPostgresCreator implements TransferCreator {
                     .findByAccountNumber(transfer.getFromAccountNumber())
                     .sendMoney(transfer.getAmount());
             accountRetrievalClient
-                    .findByAccountNumber(transfer.getToAccountNumber())
+                    .findByAccNumberOrExtAccount(transfer.getToAccountNumber())
                     .receiveMoney(transfer.getAmount());
             transferRepository.save(transfer);
         }

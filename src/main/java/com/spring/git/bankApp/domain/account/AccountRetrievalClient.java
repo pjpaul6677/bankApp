@@ -9,4 +9,7 @@ public interface AccountRetrievalClient {
 
     Account findByAccountId(long id);
 
+    Account findByAccNumberOrExtAccount(String accountNumber);
+
+
 }

@@ -46,7 +46,7 @@ public class Account extends Auditable {
     }
 
     public void sendMoney(BigDecimal amount) {
-        if (balance.compareTo(amount) > 0) {
+        if (balance.compareTo(amount) < 0) {
             throw new HttpClientErrorException(HttpStatus.INSUFFICIENT_STORAGE);
         }
         this.balance = balance.subtract(amount);

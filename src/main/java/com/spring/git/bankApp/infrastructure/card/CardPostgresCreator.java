@@ -23,7 +23,7 @@ class CardPostgresCreator implements CardCreator {
         Account account = accountRetrievalClient.findByAccountNumber(accountNumber);
         Random random = new Random();
         String randomNumber = ("000" + random.nextInt() * 10000);
-        randomNumber = randomNumber.substring((randomNumber.length()-4), randomNumber.length());
+        randomNumber = randomNumber.substring((randomNumber.length()-4));
         account.addCard(Card.createCard(randomNumber));
     }
 }

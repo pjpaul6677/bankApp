@@ -5,8 +5,13 @@ import com.spring.git.bankApp.domain.model.Auditable;
 import com.spring.git.bankApp.domain.model.account.Account;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,29 +21,38 @@ import java.util.Set;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
-public class User extends Auditable {
+@Getter
+public class User extends Auditable implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_sequence")
-    @Getter
     private Long id;
 
-    @Getter
-    private String login;
-
+    private String username;
     private String password;
 
-    @Getter
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Account> accounts;
 
-    public static User createUser(String login, Gender gender, String password) {
+    public static User createUser(String username, Gender gender, String password) {
         return User.builder()
-                .login(login)
+                .username(username)
                 .gender(gender)
+                .role(Role.ROLE_USER)
+                .password(password)
+                .accounts(new HashSet<>()).build();
+    }
+
+    public static User createAdmin(String username, Gender gender, String password) {
+        return User.builder()
+                .username(username)
+                .gender(gender)
+                .role(Role.ROLE_ADMIN)
                 .password(password)
                 .accounts(new HashSet<>()).build();
     }
@@ -58,14 +72,37 @@ public class User extends Auditable {
         }
     }
 
-    public void updateLogin(String newLogin, String password) {
+    public void updateUsername(String newLogin, String password) {
         if (this.password.equals(password)) {
-            this.login = newLogin;
+            this.username = newLogin;
             log.info("Login updated");
         } else {
             log.info("False password");
         }
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(role.toString()));
+    }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

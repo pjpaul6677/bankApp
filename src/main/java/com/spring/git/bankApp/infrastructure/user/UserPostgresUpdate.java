@@ -16,14 +16,14 @@ class UserPostgresUpdate implements UserUpdate {
     @Override
     @Transactional
     public void updatePassword(String login, String oldPassword, String newPassword) {
-        User user = userRepository.findByLogin(login);
+        User user = userRepository.findByUsername(login);
         user.updatePassword(oldPassword, newPassword);
     }
 
     @Override
     @Transactional
     public void updateLogin(String oldLogin, String newLogin, String password) {
-        User user = userRepository.findByLogin(oldLogin);
-        user.updateLogin(newLogin, password);
+        User user = userRepository.findByUsername(oldLogin);
+        user.updateUsername(newLogin, password);
     }
 }

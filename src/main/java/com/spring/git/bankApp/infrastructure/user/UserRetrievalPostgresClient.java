@@ -5,6 +5,8 @@ import com.spring.git.bankApp.domain.user.UserRetrievalClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 class UserRetrievalPostgresClient implements UserRetrievalClient {
@@ -18,6 +20,11 @@ class UserRetrievalPostgresClient implements UserRetrievalClient {
 
     @Override
     public User getByLogin(String login) {
-        return userRepository.findByLogin(login);
+        return userRepository.findByUsername(login);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

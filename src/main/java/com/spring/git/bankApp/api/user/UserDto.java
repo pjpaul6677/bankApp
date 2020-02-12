@@ -21,4 +21,5 @@ class UserDto {
     @Size(min = 6,max = 15)
     @NotNull
     private final String password;
+
 }

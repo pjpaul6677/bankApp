@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("v1/users")
@@ -23,7 +25,12 @@ public class UserController {
 
     @GetMapping(path = "/{login}")
     public ResponseEntity<UserDto> findByLogin(@PathVariable String login) {
-        return ResponseEntity.ok(UserMapper.mapToDto(userFacade.findByLogin(login)));
+        return ResponseEntity.ok(UserMapper.mapToDto(userFacade.loadUserByUsername(login)));
+    }
+
+    @GetMapping(path = "/all")
+    public Iterable<UserDto> findAllusers() {
+        return UserMapper.mapIterableUsersToDto(userFacade.findAllUsers());
     }
 
     @PatchMapping(path = "/updateLogin")
@@ -41,7 +48,7 @@ public class UserController {
         return  ResponseEntity.ok("Jest ok");
     }
 
-    @PostMapping
+    @PostMapping(path = "user")
     public void createUser(@Valid @RequestBody UserDto userDto) {
         log.info("User creation {}", userDto.getLogin());
         userFacade.createUser(userDto.getLogin(), userDto.getGender(), userDto.getPassword());
@@ -54,15 +61,20 @@ public class UserController {
     }
 
     @PostMapping(path = "/userstandard")
-    public void createUserAndStandardAccount(@Valid @RequestBody UserDto userDto) {
+    public void createUserAndStandardAccount(@Valid  @RequestBody UserDto userDto) {
         log.info("User and standard Account creation {}", userDto.getLogin());
         userFacade.createUserAndStandardAccount(userDto.getLogin(), userDto.getGender(), userDto.getPassword());
     }
 
     private static class UserMapper {
         private static UserDto mapToDto(User user) {
-            return UserDto.builder().login(user.getLogin())
+            return UserDto.builder().login(user.getUsername())
                     .gender(user.getGender()).build();
+        }
+
+        private static Iterable<UserDto> mapIterableUsersToDto(List<User> users) {
+            List<UserDto> dtoUsers = users.stream().map(user -> mapToDto(user)).collect(Collectors.toList());
+            return dtoUsers;
         }
     }
 

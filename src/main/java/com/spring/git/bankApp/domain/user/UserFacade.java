@@ -3,11 +3,15 @@ package com.spring.git.bankApp.domain.user;
 import com.spring.git.bankApp.domain.model.user.Gender;
 import com.spring.git.bankApp.domain.model.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserFacade {
+public class UserFacade implements UserDetailsService {
 
     private final UserCreator userCreator;
     private final UserRetrievalClient userRetrievalClient;
@@ -33,8 +37,12 @@ public class UserFacade {
         userUpdate.updateLogin(oldLogin,newLogin, password);
     }
 
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRetrievalClient.getByLogin(username);
+    }
 
-    public User findByLogin(String login) {
-        return userRetrievalClient.getByLogin(login);
+    public List<User> findAllUsers() {
+        return userRetrievalClient.findAll();
     }
 }

@@ -7,6 +7,10 @@ import com.spring.git.bankApp.domain.model.user.User;
 import com.spring.git.bankApp.domain.user.UserCommand;
 import com.spring.git.bankApp.domain.user.UserCreator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -50,6 +54,23 @@ class UserPostgresCreator implements UserCreator {
                 .balance(BigDecimal.ZERO)
                 .accountType(AccountType.STANDARD).build();
         user.addAccount(account);
+    }
+
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void userExamples() {
+        createUserAndPremiumAccount("John", Gender.MALE, passwordEncoder().encode("John"));
+        createUserAndStandardAccount("Robert", Gender.MALE, passwordEncoder().encode("Robert"));
+        createUserAndPremiumAccount("Natalie", Gender.FEMALE, passwordEncoder().encode("Natalie"));
+        createUserAndStandardAccount("Karen", Gender.FEMALE, passwordEncoder().encode("Karen"));
+
+        User adminKaty = User.createAdmin("Katy", Gender.FEMALE, passwordEncoder().encode("Katy"));
+        userRepository.save(adminKaty);
+        User adminAleksander = User.createAdmin("Aleksander", Gender.MALE, passwordEncoder().encode("Aleksander"));
+        userRepository.save(adminAleksander);
     }
 
 

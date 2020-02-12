@@ -26,16 +26,16 @@ public class UserTest {
     @ParameterizedTest
     @MethodSource("usersData")
     void correctLoginUpdate(User user, String newLogin, String password) {
-        user.updateLogin(newLogin, password);
-        assertEquals(user.getLogin(),"NewLogin");
+        user.updateUsername(newLogin, password);
+        assertEquals(user.getUsername(),"NewLogin");
     }
 
     @ParameterizedTest
     @MethodSource("usersData")
     void correctPasswordUpdate(User user, String newPassword, String password) {
         user.updatePassword(password, newPassword);
-        user.updateLogin("NewLogin", newPassword);
-        assertEquals(user.getLogin(),"NewLogin");
+        user.updateUsername("NewLogin", newPassword);
+        assertEquals(user.getUsername(),"NewLogin");
     }
 
 

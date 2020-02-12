@@ -7,4 +7,9 @@ public interface AccountRetrievalClient {
 
     Account findByAccountNumber(String accountNumber);
 
+    Account findByAccountId(long id);
+
+    Account findByAccNumberOrExtAccount(String accountNumber);
+
+
 }

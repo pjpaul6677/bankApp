@@ -17,6 +17,14 @@ public class UserFacade {
         userCreator.create(login, gender, password);
     }
 
+    public void createUserAndPremiumAccount(String login, Gender gender, String password) {
+        userCreator.createUserAndPremiumAccount(login, gender, password);
+    }
+
+    public void createUserAndStandardAccount(String login, Gender gender, String password) {
+        userCreator.createUserAndStandardAccount(login, gender, password);
+    }
+
     public void updatePassword(String login, String oldPassword, String newPassword) {
         userUpdate.updatePassword(login, oldPassword, newPassword);
     }

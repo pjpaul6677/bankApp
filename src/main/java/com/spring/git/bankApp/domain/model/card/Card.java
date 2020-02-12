@@ -1,7 +1,9 @@
 package com.spring.git.bankApp.domain.model.card;
 
-import com.spring.git.bankApp.exceptionHandler.ExceptionHandler;
+import com.spring.git.bankApp.domain.model.account.Account;
 import lombok.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -14,7 +16,7 @@ import javax.validation.constraints.Size;
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "card_sequence")
     private long id;
 
     @Getter
@@ -24,6 +26,11 @@ public class Card {
     @Getter
     @Enumerated(EnumType.STRING)
     private CardStatus cardStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    @Setter
+    private Account account;
 
     public static Card createCard(String lastFourDigits) {
         return Card.builder()
@@ -35,7 +42,7 @@ public class Card {
         if (this.cardStatus != CardStatus.RESTRICTED) {
             this.cardStatus = cardStatus;
         } else {
-            throw new ExceptionHandler();
+            throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
         }
     }
 

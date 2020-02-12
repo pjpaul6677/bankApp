@@ -19,7 +19,8 @@ import java.util.Set;
 public class User extends Auditable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_sequence")
+    @Getter
     private Long id;
 
     @Getter
@@ -32,17 +33,18 @@ public class User extends Auditable {
     private Gender gender;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private Set<Account> accounts = new HashSet<>();
+    private Set<Account> accounts;
 
     public static User createUser(String login, Gender gender, String password) {
         return User.builder()
                 .login(login)
                 .gender(gender)
-                .password(password).build();
+                .password(password)
+                .accounts(new HashSet<>()).build();
     }
 
     public void addAccount(Account account) {
+        account.setUser(this);
         accounts.add(account);
     }
 
